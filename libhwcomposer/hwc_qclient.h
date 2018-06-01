@@ -35,6 +35,7 @@
 #include <cutils/log.h>
 #include <utils/RefBase.h>
 #include <binder/IServiceManager.h>
+#include <media/IMediaDeathNotifier.h>
 #include <IQClient.h>
 
 struct hwc_context_t;
@@ -47,7 +48,6 @@ class QClient : public BnQClient {
 public:
     QClient(hwc_context_t *ctx);
     virtual ~QClient();
-<<<<<<< HEAD
     virtual android::status_t notifyCallback(uint32_t command,
             const android::Parcel* inParcel,
             android::Parcel* outParcel);
@@ -71,13 +71,6 @@ private:
     hwc_context_t *mHwcContext;
     const android::sp<android::IMediaDeathNotifier> mMPDeathNotifier;
     const android::sp<QClient::CamDeathNotifier>  mCamDeathNotifier;
-=======
-    virtual void notifyCallback(uint32_t msg, uint32_t value);
-private:
-    void securing(uint32_t startEnd);
-    void unsecuring(uint32_t startEnd);
-    hwc_context_t *mHwcContext;
->>>>>>> parent of 7128e50... hwc: Get notified on media player death.
 };
 }; // namespace qClient
 #endif // ANDROID_QCLIENT_H

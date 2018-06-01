@@ -6,7 +6,6 @@ LOCAL_MODULE                  := hwcomposer.$(TARGET_BOARD_PLATFORM)
 LOCAL_MODULE_RELATIVE_PATH    := hw
 LOCAL_VENDOR_MODULE           := true
 LOCAL_MODULE_TAGS             := optional
-<<<<<<< HEAD
 LOCAL_C_INCLUDES              := $(common_includes) $(kernel_includes) \
                                  $(TOP)/external/skia/include/core \
                                  $(TOP)/external/skia/include/images \
@@ -39,13 +38,6 @@ ifeq ($(VSYNC_EVENT_PHASE_OFFSET_NS),)
     LOCAL_CFLAGS += -DDYNAMIC_FPS
 endif
 
-=======
-LOCAL_C_INCLUDES              := $(common_includes) $(kernel_includes)
-LOCAL_SHARED_LIBRARIES        := $(common_libs) libEGL liboverlay libgenlock \
-                                 libexternal libqdutils libhardware_legacy \
-                                 libdl libmemalloc libqservice libsync libbinder
-LOCAL_CFLAGS                  := $(common_flags) -DLOG_TAG=\"qdhwcomposer\"
->>>>>>> parent of 7128e50... hwc: Get notified on media player death.
 LOCAL_ADDITIONAL_DEPENDENCIES := $(common_deps)
 LOCAL_SRC_FILES               := hwc.cpp          \
                                  hwc_utils.cpp    \
