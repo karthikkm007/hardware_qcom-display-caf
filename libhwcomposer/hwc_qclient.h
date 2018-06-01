@@ -35,7 +35,6 @@
 #include <cutils/log.h>
 #include <utils/RefBase.h>
 #include <binder/IServiceManager.h>
-#include <media/IMediaDeathNotifier.h>
 #include <IQClient.h>
 
 struct hwc_context_t;
@@ -48,29 +47,12 @@ class QClient : public BnQClient {
 public:
     QClient(hwc_context_t *ctx);
     virtual ~QClient();
-    virtual android::status_t notifyCallback(uint32_t command,
-            const android::Parcel* inParcel,
-            android::Parcel* outParcel);
 
-    //Notifies camera service death
-    class CamDeathNotifier : public IBinder::DeathRecipient {
-    public:
-        CamDeathNotifier(){}
-        virtual void binderDied(const android::wp<IBinder>& who);
-    };
-
+    virtual void notifyCallback(uint32_t msg, uint32_t value);
 private:
-    //Notifies of Media Player death
-    class MPDeathNotifier : public android::IMediaDeathNotifier {
-    public:
-        MPDeathNotifier(hwc_context_t* ctx) : mHwcContext(ctx){}
-        virtual void died();
-        hwc_context_t *mHwcContext;
-    };
-
+    void securing(uint32_t startEnd);
+    void unsecuring(uint32_t startEnd);
     hwc_context_t *mHwcContext;
-    const android::sp<android::IMediaDeathNotifier> mMPDeathNotifier;
-    const android::sp<QClient::CamDeathNotifier>  mCamDeathNotifier;
 };
 }; // namespace qClient
 #endif // ANDROID_QCLIENT_H
