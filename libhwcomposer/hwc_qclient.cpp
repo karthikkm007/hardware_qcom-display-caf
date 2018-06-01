@@ -51,9 +51,13 @@ using namespace qQdcm;
 namespace qClient {
 
 // ----------------------------------------------------------------------------
+<<<<<<< HEAD
 QClient::QClient(hwc_context_t *ctx) : mHwcContext(ctx),
         mMPDeathNotifier(new MPDeathNotifier(ctx)),
         mCamDeathNotifier(new CamDeathNotifier())
+=======
+QClient::QClient(hwc_context_t *ctx) : mHwcContext(ctx)
+>>>>>>> parent of 7128e50... hwc: Get notified on media player death.
 {
     ALOGD_IF(QCLIENT_DEBUG, "QClient Constructor invoked");
 }
@@ -91,6 +95,7 @@ static void unsecuring(hwc_context_t *ctx, uint32_t startEnd) {
         ctx->proc->invalidate(ctx->proc);
 }
 
+<<<<<<< HEAD
 void QClient::MPDeathNotifier::died() {
     mHwcContext->mDrawLock.lock();
     ALOGD_IF(QCLIENT_DEBUG, "Media Player died");
@@ -484,4 +489,6 @@ status_t QClient::notifyCallback(uint32_t command, const Parcel* inParcel,
     return ret;
 }
 
+=======
+>>>>>>> parent of 7128e50... hwc: Get notified on media player death.
 }
