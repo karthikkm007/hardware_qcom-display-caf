@@ -47,12 +47,37 @@ class QClient : public BnQClient {
 public:
     QClient(hwc_context_t *ctx);
     virtual ~QClient();
+<<<<<<< HEAD
+    virtual android::status_t notifyCallback(uint32_t command,
+            const android::Parcel* inParcel,
+            android::Parcel* outParcel);
 
+    //Notifies camera service death
+    class CamDeathNotifier : public IBinder::DeathRecipient {
+    public:
+        CamDeathNotifier(){}
+        virtual void binderDied(const android::wp<IBinder>& who);
+    };
+
+private:
+    //Notifies of Media Player death
+    class MPDeathNotifier : public android::IMediaDeathNotifier {
+    public:
+        MPDeathNotifier(hwc_context_t* ctx) : mHwcContext(ctx){}
+        virtual void died();
+        hwc_context_t *mHwcContext;
+    };
+
+    hwc_context_t *mHwcContext;
+    const android::sp<android::IMediaDeathNotifier> mMPDeathNotifier;
+    const android::sp<QClient::CamDeathNotifier>  mCamDeathNotifier;
+=======
     virtual void notifyCallback(uint32_t msg, uint32_t value);
 private:
     void securing(uint32_t startEnd);
     void unsecuring(uint32_t startEnd);
     hwc_context_t *mHwcContext;
+>>>>>>> parent of 7128e50... hwc: Get notified on media player death.
 };
 }; // namespace qClient
 #endif // ANDROID_QCLIENT_H

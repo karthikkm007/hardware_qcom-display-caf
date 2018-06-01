@@ -6,11 +6,46 @@ LOCAL_MODULE                  := hwcomposer.$(TARGET_BOARD_PLATFORM)
 LOCAL_MODULE_RELATIVE_PATH    := hw
 LOCAL_VENDOR_MODULE           := true
 LOCAL_MODULE_TAGS             := optional
+<<<<<<< HEAD
+LOCAL_C_INCLUDES              := $(common_includes) $(kernel_includes) \
+                                 $(TOP)/external/skia/include/core \
+                                 $(TOP)/external/skia/include/images \
+                                 frameworks/native/libs/arect/include
+
+ifeq ($(strip $(TARGET_USES_QCOM_DISPLAY_PP)),true)
+LOCAL_C_INCLUDES              += $(TARGET_OUT_HEADERS)/qdcm/inc \
+                                 $(TARGET_OUT_HEADERS)/common/inc \
+                                 $(TARGET_OUT_HEADERS)/pp/inc
+endif
+
+LOCAL_SHARED_LIBRARIES        := $(common_libs) libEGL liboverlay \
+                                 libhdmi libqdutils libhardware_legacy \
+                                 libdl libmemalloc libqservice libsync \
+                                 libbinder libmedia libdisplayconfig \
+                                 libbfqio_vendor
+
+LOCAL_CFLAGS                  := $(common_flags) -DLOG_TAG=\"qdhwcomposer\" -Wno-absolute-value \
+                                 -Wno-float-conversion -Wno-unused-parameter
+
+ifeq ($(TARGET_USES_QCOM_BSP),true)
+LOCAL_SHARED_LIBRARIES += libskia
+ifeq ($(GET_FRAMEBUFFER_FORMAT_FROM_HWC),true)
+    LOCAL_CFLAGS += -DGET_FRAMEBUFFER_FORMAT_FROM_HWC
+endif
+endif #TARGET_USES_QCOM_BSP
+
+#Enable Dynamic FPS if PHASE_OFFSET is not set
+ifeq ($(VSYNC_EVENT_PHASE_OFFSET_NS),)
+    LOCAL_CFLAGS += -DDYNAMIC_FPS
+endif
+
+=======
 LOCAL_C_INCLUDES              := $(common_includes) $(kernel_includes)
 LOCAL_SHARED_LIBRARIES        := $(common_libs) libEGL liboverlay libgenlock \
                                  libexternal libqdutils libhardware_legacy \
                                  libdl libmemalloc libqservice libsync libbinder
 LOCAL_CFLAGS                  := $(common_flags) -DLOG_TAG=\"qdhwcomposer\"
+>>>>>>> parent of 7128e50... hwc: Get notified on media player death.
 LOCAL_ADDITIONAL_DEPENDENCIES := $(common_deps)
 LOCAL_SRC_FILES               := hwc.cpp          \
                                  hwc_utils.cpp    \
